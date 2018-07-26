@@ -36,7 +36,6 @@ app.get('/todos', (req, res) => {
     res.send({
       todos
     })
-    console.log(todos);
   }, (e) => {
     res.status(400).send(e)
   })
@@ -52,7 +51,9 @@ app.get('/todos/:id', (req, res) => {
       .then((todo) => {
 
         if (todo) {
-          res.send({todo})
+          res.send({
+            todo
+          })
         } else {
           res.status(404).send();
         }
