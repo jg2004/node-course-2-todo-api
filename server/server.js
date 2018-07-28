@@ -41,12 +41,11 @@ app.get('/todos', (req, res) => {
     res.status(400).send(e)
   })
 })
-//GET TODO by ID
 
+//GET TODO by ID
 app.get('/todos/:id', (req, res) => {
 
   const id = req.params.id;
-
   if (ObjectID.isValid(id)) {
     Todo.findById(id)
       .then((todo) => {
@@ -66,7 +65,29 @@ app.get('/todos/:id', (req, res) => {
   } else {
     res.status(404).send();
   }
+})
 
+//DELETE TODO BY ID
+app.delete('/todos/:id', (req, res) => {
+  const id = req.params.id;
+  if (ObjectID.isValid(id)) {
+
+    Todo.findByIdAndRemove(id).then((todo) => {
+      if (todo) {
+        res.send({
+          todo
+        })
+
+      } else {
+        res.status(404).send();
+      }
+    }).catch((e) => {
+      res.status(400).status()
+    })
+
+  } else {
+    res.send(404).send();
+  }
 })
 app.listen(port, () => {
   console.log(`Started on port ${port}`);
